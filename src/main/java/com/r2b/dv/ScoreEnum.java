@@ -2,25 +2,25 @@ package com.r2b.dv;
 
 /**
  * 
- * @author Rafik BOUGHANI
  *
+ * @author Rafik BOUGHANI
+ * @email rafik.boughani@gmail.com
  * @date 20 mars 2019
  *
- * @email rafik.boughani@gmail.com
  */
 public enum ScoreEnum {
 
-	QUINZE("1"), 
-	TRENTE("2"), 
-	QUARENTE("3");
+	UN(15), 
+	DEUX(30), 
+	TROIS(40);
 
-	private String value;
+	private Integer value;
 
-	ScoreEnum(String envUrl) {
+	ScoreEnum(Integer envUrl) {
 		this.value = envUrl;
 	}
 
-	public String getValue() {
+	public Integer getValue() {
 		return value;
 	}
 }
