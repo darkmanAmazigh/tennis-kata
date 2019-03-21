@@ -19,6 +19,7 @@ public class Main {
 	
 	public static void main(String args[]) {
 		
+		StringBuilder result = new StringBuilder();
 		/* set first player name */
 		System.out.print("Player 1 name :");
         Player firstPlayer = new Player(scanner.nextLine());
@@ -33,7 +34,7 @@ public class Main {
 		boolean gameOver=false;
 		
         /* start the match */
-        while (!gameOver) {
+        while (!gameOver ) {
         	String command = scanner.nextLine();
             switch (command) {
                 case "1":
@@ -43,23 +44,45 @@ public class Main {
                 	match.incrementeScore(secondPlayer);
                     break;
                 case "d":
-                    if (match.getWinner() != null) {
-                        System.out.println(String.format("%s:\n SCORE : %d \t %s", firstPlayer.getName(),
-                                match.displayScore(match.getPlayer1().getScore()), (match.getWinner().equals(firstPlayer)) ? match.getWinner().getName()+" win the game" : ""));
-                        System.out.println(String.format("%s:\n SCORE : %d \t %s", secondPlayer.getName(),
-                        		match.displayScore(match.getPlayer2().getScore()), (match.getWinner().equals(secondPlayer)) ? match.getWinner().getName()+" win the game" : ""));
-                        gameOver=true;
-                    } else {
-                        System.out.println(String.format("%s:\n SCORE : %d \t", firstPlayer.getName(),
-                        		match.displayScore(match.getPlayer1().getScore())));
-                        System.out.println(String.format("%s:\n SCORE : %d \t", secondPlayer.getName(),
-                        		match.displayScore(match.getPlayer2().getScore())));
-                    }
+                    
+                    printPoint(result, match, firstPlayer, secondPlayer);
+                    System.err.println(result);
                     System.out.println("------------------------------");
                     break;
                 default:
                     break;
             }
+            if (match.getWinner() != null) {
+                gameOver=true;
+                printPoint(result, match, firstPlayer, secondPlayer);
+                System.err.println(result);
+            } 
         }
+	}
+
+	private static void printPoint(StringBuilder result, Match match, Player firstPlayer, Player secondPlayer) {
+		result.append("\n");
+		result.append(""+match.getPlayer1().getName());
+        for (Integer item : match.getPlayer1().getAllPoint()) {
+        	result.append(" \t "+item);
+        }
+        if(match.getWinner() != null) {
+        	result.append(" \t ");
+        	result.append(firstPlayer.getScore());
+        	result.append(" \t ");
+        	result.append((match.getWinner().equals(firstPlayer)) ? match.getWinner().getName()+" win the game" : "");
+        }
+        result.append("\n");
+        result.append(""+match.getPlayer2().getName());
+        for (Integer item : match.getPlayer2().getAllPoint()) {
+        	result.append(" \t "+item);
+        }
+        if(match.getWinner() != null) {
+        	result.append(" \t ");
+        	result.append(secondPlayer.getScore());
+        	result.append(" \t ");
+        	result.append((match.getWinner().equals(secondPlayer)) ? match.getWinner().getName()+" win the game" : "");
+        }
+        result.append("\n");
 	}
 }

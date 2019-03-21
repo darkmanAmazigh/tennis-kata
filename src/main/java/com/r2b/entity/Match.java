@@ -15,6 +15,7 @@ public class Match {
 	private Player player2;
 	private boolean lastPoint = false;
 	private Player winner;
+	private boolean gameOver;
 	
 	/**
 	 * Initialize score of two players
@@ -42,6 +43,16 @@ public class Match {
 		this.player2 = player2;
 	}
 	
+	
+	
+	public boolean isGameOver() {
+		return gameOver;
+	}
+
+	public void setGameOver(boolean gameOver) {
+		this.gameOver = gameOver;
+	}
+
 	/**
 	 * Increment player score
 	 * @param p
@@ -50,10 +61,26 @@ public class Match {
 		if (isLastPoint()){
 			winner=p;
 			reinitScore();
-		}else
+		}else {
 			p.setScore(p.getScore() + 1);
+			addTrace(p);
+		}
 	}
 	
+	/**
+	 * table point history per player
+	 * @param p
+	 */
+	private void addTrace(Player p) {
+		
+		p.getAllPoint().add(displayScore(p.getScore()));
+		if (p.equals(this.player1)){
+			this.player2.getAllPoint().add(displayScore(this.player2.getScore()));
+		}else{
+			this.player1.getAllPoint().add(displayScore(this.player1.getScore()));
+		}
+	}
+
 	/**
 	 * format score
 	 * @param score
